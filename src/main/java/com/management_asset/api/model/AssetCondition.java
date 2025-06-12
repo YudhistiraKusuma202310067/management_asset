@@ -1,4 +1,4 @@
-package com.management_asset.model;
+package com.management_asset.api.model;
 
 import java.sql.Date;
 
@@ -7,8 +7,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.ManyToAny;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

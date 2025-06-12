@@ -1,4 +1,4 @@
-package com.management_asset.model;
+package com.management_asset.api.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

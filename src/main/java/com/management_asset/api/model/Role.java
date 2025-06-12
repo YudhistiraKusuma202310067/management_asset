@@ -1,4 +1,4 @@
-package com.management_asset.model;
+package com.management_asset.api.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,13 +11,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "tb_m_asset_status")
+@Table(name = "tb_m_role")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AssetStatus {
+public class Role {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String status;
+    private String name;
+    private Integer level;
+
 }
