@@ -1,4 +1,4 @@
-package com.management_asset.model;
+package com.management_asset.api.model;
 
 import java.time.LocalDateTime;
 
@@ -27,13 +27,15 @@ public class Loaning {
     private LocalDateTime loanDate;
     private LocalDateTime returnDate;
     private String note;
-    // @OneToMany
-    // @JoinColumn(name = "employee_id", referencedColumnName = "id")
-    // private Employee employee;
 
-    // @OneToMany
-    // @JoinColumn(name = "asset_id", referencedColumnName = "id")
-    // private Asset asset;
+    @OneToMany
+    @JoinColumn(name = "employee_id", referencedColumnName = "id")
+    private Employee employee;
+
+    @OneToMany
+    @JoinColumn(name = "asset_id", referencedColumnName = "id")
+    private Asset asset;
+
     @OneToMany
     @JoinColumn(name = "loan_status_process_id", referencedColumnName = "id")
     private LoanStatusProcess loanStatusProcess;

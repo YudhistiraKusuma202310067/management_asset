@@ -1,10 +1,9 @@
-package com.management_asset.model;
+package com.management_asset.api.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -23,5 +22,4 @@ public class Role {
     private Integer id;
     private String name;
     private Integer level;
-
 }
