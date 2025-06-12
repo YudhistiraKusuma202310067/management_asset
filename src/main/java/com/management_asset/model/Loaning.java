@@ -1,4 +1,4 @@
-package com.management_asset.api.model;
+package com.management_asset.model;
 
 import java.time.LocalDateTime;
 
