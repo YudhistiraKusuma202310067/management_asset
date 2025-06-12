@@ -1,4 +1,4 @@
-package com.management_asset.api.Model;
+package com.management_asset.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
