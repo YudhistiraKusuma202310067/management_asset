@@ -1,9 +1,11 @@
 package com.management_asset.api.service.generic;
 
+public interface GenericService<T, K> {
+
 import java.util.List;
 
-public interface GenericService <T, K> { //T = model, K = tipe data
+public interface GenericService <T,K>{
     public List<T> findAll();
     public T findById(K id);
-    public T save(T model);  
+    public T save(T model);
 }
