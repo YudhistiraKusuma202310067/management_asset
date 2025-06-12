@@ -8,7 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -23,12 +22,12 @@ import lombok.NoArgsConstructor;
 public class LoanStatusHistory {
 
     private LocalDateTime createdDate;
-  
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "approver_id", referencedColumnName = "id")
     private Employee approver;
 
