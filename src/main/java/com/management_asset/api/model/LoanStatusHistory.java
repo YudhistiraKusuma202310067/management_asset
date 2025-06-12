@@ -22,10 +22,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LoanStatusHistory {
     private LocalDateTime createdDate;
-
+  
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @OneToMany
     @JoinColumn(name = "approver_id", referencedColumnName = "id")
     private Employee approver;
@@ -37,5 +38,4 @@ public class LoanStatusHistory {
     @ManyToOne
     @JoinColumn(name = "loan_status_process_id", referencedColumnName = "id")
     private LoanStatusProcess loanStatusProcess;
-
 }

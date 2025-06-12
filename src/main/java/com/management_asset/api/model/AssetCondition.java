@@ -3,6 +3,9 @@ package com.management_asset.api.model;
 import java.sql.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -18,6 +21,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AssetCondition {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     @OneToMany
     @JoinColumn(name = "asset_id", referencedColumnName = "id")
     private Asset asset;
@@ -33,5 +40,4 @@ public class AssetCondition {
     private Date checking_date;
     private String proof_of_damage;
     private String notes;
-
 }
