@@ -12,14 +12,14 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "tb_m_loan_status_process")
-@Data
+@Data 
 @AllArgsConstructor
 @NoArgsConstructor
 
 public class LoanStatusProcess {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Integer id;
     private String loaningStatus;
 }
+
