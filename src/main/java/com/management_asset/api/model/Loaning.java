@@ -40,4 +40,3 @@ public class Loaning {
     @JoinColumn(name = "loan_status_process_id", referencedColumnName = "id")
     private LoanStatusProcess loanStatusProcess;
 }
-

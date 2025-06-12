@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoanStatusHistory {
+
     private LocalDateTime createdDate;
   
     @Id
