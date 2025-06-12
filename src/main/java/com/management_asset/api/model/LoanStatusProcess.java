@@ -22,3 +22,4 @@ public class LoanStatusProcess {
     private Integer id;
     private String loaningStatus;
 }
+
