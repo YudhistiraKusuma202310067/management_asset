@@ -1,4 +1,4 @@
-package com.management_asset.model;
+package com.management_asset.api.model;
 
 import java.time.LocalDateTime;
 
@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 public class Loaning {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

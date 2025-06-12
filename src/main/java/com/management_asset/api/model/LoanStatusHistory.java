@@ -1,4 +1,4 @@
-package com.management_asset.model;
+package com.management_asset.api.model;
 
 import java.time.LocalDateTime;
 
@@ -18,12 +18,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoanStatusHistory {
+
     private LocalDateTime createdDate;
 
     // @OneToMany
     // @JoinColumn(name = "approver_id", referencedColumnName = "id")
     // private Employee approver;
-
     @ManyToOne
     @JoinColumn(name = "loaning_id", referencedColumnName = "id")
     private Loaning loaning;

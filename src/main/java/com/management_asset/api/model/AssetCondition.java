@@ -1,4 +1,4 @@
-package com.management_asset.model;
+package com.management_asset.api.model;
 
 import java.sql.Date;
 
@@ -20,6 +20,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AssetCondition {
+
     @OneToMany
     @JoinColumn(name = "asset_id", referencedColumnName = "id")
     private Asset asset;

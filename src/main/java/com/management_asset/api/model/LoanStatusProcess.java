@@ -1,4 +1,4 @@
-package com.management_asset.model;
+package com.management_asset.api.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,13 +11,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "tb_m_category")
+@Table(name = "tb_m_loan_status_process")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Category {
+
+public class LoanStatusProcess {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String category;
+    private String loaningStatus;
 }
