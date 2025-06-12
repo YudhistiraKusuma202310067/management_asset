@@ -3,6 +3,9 @@ package com.management_asset.api.model;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -19,6 +22,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LoanStatusHistory {
     private LocalDateTime createdDate;
+  
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @OneToMany
     @JoinColumn(name = "approver_id", referencedColumnName = "id")
