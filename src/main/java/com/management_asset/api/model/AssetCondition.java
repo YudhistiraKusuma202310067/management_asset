@@ -1,6 +1,8 @@
 package com.management_asset.api.model;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,11 +27,11 @@ public class AssetCondition {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "asset_id", referencedColumnName = "id")
     private Asset asset;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "part_id", referencedColumnName = "id")
     private Parts parts;
 
@@ -37,7 +39,7 @@ public class AssetCondition {
     @JoinColumn(name = "checker_id", referencedColumnName = "id")
     private Employee employee;
 
-    private Date checking_date;
+    private LocalDateTime checking_date;
     private String proof_of_damage;
     private String notes;
 

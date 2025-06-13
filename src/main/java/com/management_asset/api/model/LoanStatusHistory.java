@@ -28,7 +28,7 @@ public class LoanStatusHistory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "approver_id", referencedColumnName = "id")
     private Employee approver;
 
