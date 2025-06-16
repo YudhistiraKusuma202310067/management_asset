@@ -39,4 +39,15 @@ public class AssetController {
     public Asset saveAsset(@RequestBody AssetDTO assetDTO) {
         return assetService.save(assetDTO);
     }
+
+    @GetMapping("/assetByStatus")
+    public List<Asset> getAssetByStatus(@RequestParam("assetStatusId") Integer assetStatusId) {
+        return assetService.findAssetByStatus(assetStatusId);
+    }
+
+    @GetMapping("/borrowed")
+    public List<Asset> getBorrowedAssetByEmployeeId(
+        @RequestParam("employeeId") Integer employeeId) {
+        return assetService.findBorrowedAssetByEmployeeId(employeeId);
+    }
 }

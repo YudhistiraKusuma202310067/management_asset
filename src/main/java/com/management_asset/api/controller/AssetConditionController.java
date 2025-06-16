@@ -36,7 +36,7 @@ public class AssetConditionController {
     }
 
     @PostMapping
-    public AssetCondition save(@RequestBody AssetConditionDTO assetConditionDTO) {
+    public List<AssetCondition> save(@RequestBody List<AssetConditionDTO> assetConditionDTO) {
         return assetConditionService.save(assetConditionDTO);
     }
 }

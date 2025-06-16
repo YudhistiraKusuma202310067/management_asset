@@ -25,6 +25,7 @@ public class AssetConditionDTO {
     private Integer parts;
     private Integer employee;
     private Date checking_date;
+    private Integer rate;
     private String proof_of_damage;
     private String notes;
 }

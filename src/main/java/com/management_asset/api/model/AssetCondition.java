@@ -40,6 +40,7 @@ public class AssetCondition {
     private Employee employee;
 
     private LocalDateTime checking_date;
+    private Integer rate;
     private String proof_of_damage;
     private String notes;
 

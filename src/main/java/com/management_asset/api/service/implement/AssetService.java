@@ -49,4 +49,12 @@ public class AssetService implements IAssetService {
         asset.setAssetStatus(assetStatusRepository.findById(assetDTO.getAssetStatus()).orElse(null));
         return assetRepository.save(asset);
     }
+
+    public List<Asset> findAssetByStatus(Integer assetStatusId) {
+        return assetRepository.findAssetByStatus(assetStatusId);
+    }
+
+    public List<Asset> findBorrowedAssetByEmployeeId(Integer employeeId) {
+        return assetRepository.findBorrowedAssetByEmployeeId(employeeId);
+    }
 }
