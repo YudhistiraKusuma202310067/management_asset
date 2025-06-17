@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.management_asset.api.model.Asset;
-import com.management_asset.api.model.Category;
 import com.management_asset.api.model.dto.AssetDTO;
 import com.management_asset.api.repository.AssetRepository;
 

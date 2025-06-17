@@ -10,7 +10,12 @@ import org.springframework.stereotype.Service;
 import com.management_asset.api.model.Asset;
 import com.management_asset.api.model.AssetCondition;
 import com.management_asset.api.model.AssetStatus;
-import com.management_asset.api.model.dto.AssetConditionDTO;
+import com.management_asset.api.model.Employee;
+import com.management_asset.api.model.Parts;
+import com.management_asset.api.model.dto.AssetConditionRequestDTO;
+import com.management_asset.api.model.dto.AssetConditionResponseDTO;
+import com.management_asset.api.model.dto.ComponentAssetConditionRequestDTO;
+import com.management_asset.api.model.dto.ComponentAssetConditionResponseDTO;
 import com.management_asset.api.repository.AssetConditionRepository;
 import com.management_asset.api.repository.AssetRepository;
 import com.management_asset.api.repository.AssetStatusRepository;
@@ -50,43 +55,46 @@ public class AssetConditionService implements IAssetConditionService {
         return assetConditionRepository.findById(id).orElse(null);
     }
 
-    public List<AssetCondition> save(List<AssetConditionDTO> assetConditionDTO) {
-        List<AssetCondition> savedConditions = new ArrayList<>();
+    public AssetConditionResponseDTO save(AssetConditionRequestDTO saveAssetConditionDTO) {
+        List<ComponentAssetConditionResponseDTO> partsList = new ArrayList<>();
+        int totalRate = 0;
 
-        Integer totalRate = 0;
-        Integer assetId = null;
+        Asset asset = assetRepository.findById(saveAssetConditionDTO.getAsset()).orElse(null);
+        Employee employee = employeeRepository.findById(saveAssetConditionDTO.getEmployee()).orElse(null);
 
-        for (AssetConditionDTO dto : assetConditionDTO) {
+        if (asset == null || employee == null) return null;
+
+        for (ComponentAssetConditionRequestDTO component : saveAssetConditionDTO.getComponents()) {
+            Parts parts = partsRepository.findById(component.getParts()).orElse(null);
+            if (parts == null) continue;
+
             AssetCondition assetCondition = new AssetCondition();
-            assetCondition.setId(dto.getId());
-            assetCondition.setAsset(assetRepository.findById(dto.getAsset()).orElse(null));
-            assetCondition.setParts(partsRepository.findById(dto.getParts()).orElse(null));
-            assetCondition.setEmployee(employeeRepository.findById(dto.getEmployee()).orElse(null));
+            assetCondition.setAsset(asset);
+            assetCondition.setParts(parts);
+            assetCondition.setEmployee(employee);
             assetCondition.setChecking_date(LocalDateTime.now());
-            assetCondition.setRate(dto.getRate());
-            assetCondition.setProof_of_damage(dto.getProof_of_damage());
-            assetCondition.setNotes(dto.getNotes());
+            assetCondition.setRate(component.getRate());
+            assetCondition.setProof_of_damage(component.getProof_of_damage());
+            assetCondition.setNotes(component.getNotes());
 
-            totalRate += dto.getRate();
-            assetId = dto.getAsset();
-            
-            savedConditions.add(assetConditionRepository.save(assetCondition));
+            totalRate += component.getRate();
+            assetConditionRepository.save(assetCondition);
+
+            partsList.add(new ComponentAssetConditionResponseDTO(parts.getId(), parts.getName()));
         }
 
-        // Calculate Rate Average
-        double averageRate = totalRate / assetConditionDTO.size();
+        // Rata-rata dan update status asset
+        double averageRate = totalRate / (double) saveAssetConditionDTO.getComponents().size();
+        Integer newStatusId = (averageRate > 80) ? 1 : 3; // 1 = Available, 3 = Damaged
+        AssetStatus newStatus = assetStatusRepository.findById(newStatusId).orElse(null);
+        asset.setAssetStatus(newStatus);
+        assetRepository.save(asset);
 
-        // Update asset status
-        Asset asset = assetRepository.findById(assetId).orElse(null);
-        if (asset != null) {
-            Integer newStatusId = (averageRate > 80) ? 1 : 3; // 1 = Available, 3 = Damaged
-            AssetStatus newStatus = assetStatusRepository.findById(newStatusId).orElse(null);
-            asset.setAssetStatus(newStatus);
-            assetRepository.save(asset);
-        }
-
-        // Tinggal tambahin update status ke tabel loaning
-
-        return savedConditions;
+        return new AssetConditionResponseDTO(
+            asset.getName(),
+            employee.getName(),
+            partsList,
+            LocalDateTime.now()
+        );
     }
 }

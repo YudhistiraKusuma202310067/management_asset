@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.management_asset.api.model.AssetStatus;
-import com.management_asset.api.model.dto.AssetDTO;
 import com.management_asset.api.repository.AssetStatusRepository;
 import com.management_asset.api.service.IAssetStatusService;
 

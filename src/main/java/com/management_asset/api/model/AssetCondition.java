@@ -1,6 +1,5 @@
 package com.management_asset.api.model;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
@@ -9,9 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import org.hibernate.annotations.ManyToAny;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
