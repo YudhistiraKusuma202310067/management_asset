@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -28,15 +29,15 @@ public class Loaning {
     private LocalDateTime returnDate;
     private String note;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "employee_id", referencedColumnName = "id")
     private Employee employee;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "asset_id", referencedColumnName = "id")
     private Asset asset;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "loan_status_process_id", referencedColumnName = "id")
     private LoanStatusProcess loanStatusProcess;
 }

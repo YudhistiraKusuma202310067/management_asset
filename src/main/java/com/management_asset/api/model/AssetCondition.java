@@ -25,11 +25,11 @@ public class AssetCondition {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "asset_id", referencedColumnName = "id")
     private Asset asset;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "part_id", referencedColumnName = "id")
     private Parts parts;
 

@@ -30,9 +30,6 @@ public class Asset {
     private Category category;
 
     @ManyToOne
-
-    @JoinColumn(name =  "asset_status_id",  referencedColumnName = "id")
-
     @JoinColumn(name = "asset_status_id", referencedColumnName = "id")
 
     private AssetStatus assetStatus;
