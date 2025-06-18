@@ -5,6 +5,6 @@ import com.management_asset.api.model.User;
 import com.management_asset.api.service.generic.GenericService;
 
 @Service
-public interface UserService extends GenericService<User, Integer> {
+public interface IUserService extends GenericService<User, Integer> {
 
 }

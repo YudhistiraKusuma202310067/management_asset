@@ -1,5 +1,6 @@
 package com.management_asset.api.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -21,6 +22,7 @@ public class User {
 
     @Id
     private Integer id;
+    @Column(unique = true)
     private String username;
     private String password;
 
@@ -29,7 +31,8 @@ public class User {
     private Role role;
 
     @OneToOne
-    @MapsId
+    @MapsId // saat nge post atau pengisian ga perlu isi id PK nya cukup Id FK ini aja karna
+            // dah pake @mapsid
     @JoinColumn(name = "id")
     private Employee employee;
 }
