@@ -132,7 +132,7 @@ public class LoaningService implements ILoaningService {
             if (loaning == null) {
                return false;
             }
-
+            loaning.setLoanStatusProcess(loanStatusProcessRepository.findById(approveRequestDTO.getLoanStatusProcess()).orElse(null));
             loanStatusHistory.setLoaning(loaning);
             loanStatusHistory.setCreatedDate(LocalDateTime.now());
             if (loaning.getLoanStatusProcess() != null) {
@@ -147,6 +147,7 @@ public class LoaningService implements ILoaningService {
                             .setApprover(employeeRepository.findById(approveRequestDTO.getApprover()).orElse(null));
                 }
             }
+            loanStatusHistoryRepository.save(loanStatusHistory);
             return true;
     }
 }
