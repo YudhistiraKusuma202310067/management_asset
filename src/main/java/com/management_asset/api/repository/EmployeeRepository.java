@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EmployeeRepository extends JpaRepository<Employee, Integer> { 
+public interface EmployeeRepository extends JpaRepository<Employee, Integer> { // Integer buat ambil Primary Key nya
     @Query("SELECT e.manager FROM Employee e WHERE e.id = :employeeId")
     Employee findManagerByEmployeeId(@Param("employeeId") Integer employeeId);
 }

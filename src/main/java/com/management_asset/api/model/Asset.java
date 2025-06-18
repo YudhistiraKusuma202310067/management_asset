@@ -18,6 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Asset {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -31,6 +32,5 @@ public class Asset {
 
     @ManyToOne
     @JoinColumn(name = "asset_status_id", referencedColumnName = "id")
-
     private AssetStatus assetStatus;
 }
