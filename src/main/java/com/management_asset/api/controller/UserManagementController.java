@@ -1,5 +1,6 @@
 package com.management_asset.api.controller;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -25,6 +26,8 @@ import com.management_asset.api.Utils;
 import com.management_asset.api.model.Employee;
 import com.management_asset.api.model.User;
 import com.management_asset.api.model.dto.EmployeeDTO;
+import com.management_asset.api.model.dto.LoginDTO;
+import com.management_asset.api.model.dto.LoginResponDTO;
 import com.management_asset.api.model.dto.UserDTO;
 import com.management_asset.api.service.implement.UserManagementService;
 
@@ -42,33 +45,36 @@ public class UserManagementController {
         return userManagementService.register(employeeDTO);
     }
 
-    @GetMapping("login")
-    public User login(@RequestBody UserDTO login) {
-        User user = userManagementService.login(login.getUsername(),
-                login.getPassword());
-        return user;
-    }
+    // @GetMapping("login")
+    // public User login(@RequestBody UserDTO login) {
+    // User user = userManagementService.login(login.getUsername(),
+    // login.getPassword());
+    // return user;
+    // }
 
-    // @PostMapping("login/authentication")
-    // public ResponseEntity<Object> login(@RequestBody UserDTO login)
-    // throws Exception {
-    // try {
-    // org.springframework.security.core.userdetails.User user = new
-    // org.springframework.security.core.userdetails.User(
-    // response.getBody().getData().getId().toString(), // id employe nya diambil
-    // "", // harus terapin encode dulu
-    // getAuthorities(response.getBody().getData().getRoles())); // masukan role
-    // name
-    // PreAuthenticatedAuthenticationToken authenticationToken = new
-    // PreAuthenticatedAuthenticationToken(
-    // user, "", user.getAuthorities());
-    // SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-    // return Utils.generateResponseEntity(HttpStatus.OK, "Login Success",
-    // response);
-    // } catch (Exception e) {
-    // return Utils.generateResponseEntity(HttpStatus.OK, "Login Failed");
-    // }
-    // }
+    // DTO Request beda
+
+    @PostMapping("authentication")
+    public ResponseEntity<Object> login(@RequestBody LoginDTO login) throws Exception {
+        User userData = userManagementService.login(login.getUsername(), login.getPassword());
+        // Employee employee = EmployeeService.findById(login.get)
+
+        List<String> roles = new ArrayList<>();
+        roles.add(userData.getRole().getName());
+        try {
+            org.springframework.security.core.userdetails.User user = new org.springframework.security.core.userdetails.User(
+                    userData.getId().toString(), // id employe nya diambil //dapat dari
+                    "", // harus terapin encode dulu
+                    getAuthorities(roles) // masukan role name
+            );
+            PreAuthenticatedAuthenticationToken authenticationToken = new PreAuthenticatedAuthenticationToken(
+                    user, "", user.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            return Utils.generateResponseEntity(HttpStatus.OK, "Login Success", login); // dapatnya dari user
+        } catch (Exception e) {
+            return Utils.generateResponseEntity(HttpStatus.OK, "Login Failed");
+        }
+    }
 
     @PostMapping("changePassword")
     public Boolean changePassword(@RequestBody UserDTO dto) {
@@ -83,13 +89,12 @@ public class UserManagementController {
         return result;
     }
 
-    // private static Collection<? extends GrantedAuthority>
-    // getAuthorities(List<String> roles) {
-    // final List<SimpleGrantedAuthority> authorities = new LinkedList<>();
-    // roles.forEach((role) -> {
-    // authorities.add(new SimpleGrantedAuthority(role));
-    // });
-    // return authorities;
-    // }
+    private static Collection<? extends GrantedAuthority> getAuthorities(List<String> roles) {
+        final List<SimpleGrantedAuthority> authorities = new LinkedList<>();
+        roles.forEach((role) -> {
+            authorities.add(new SimpleGrantedAuthority(role));
+        });
+        return authorities;
+    }
 
 }
