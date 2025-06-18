@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ComponentAssetConditionRequestDTO {
+    private Integer id;
     private Integer parts;
     private Integer rate;
     private String proof_of_damage;

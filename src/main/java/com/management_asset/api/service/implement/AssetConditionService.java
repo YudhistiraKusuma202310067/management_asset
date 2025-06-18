@@ -69,6 +69,7 @@ public class AssetConditionService implements IAssetConditionService {
             if (parts == null) continue;
 
             AssetCondition assetCondition = new AssetCondition();
+            assetCondition.setId(component.getId());
             assetCondition.setAsset(asset);
             assetCondition.setParts(parts);
             assetCondition.setEmployee(employee);
