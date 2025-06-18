@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 public class LoanStatusHistory {
 
     private LocalDateTime createdDate;
-  
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

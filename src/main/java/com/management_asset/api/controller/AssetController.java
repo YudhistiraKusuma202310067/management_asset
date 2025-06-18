@@ -20,6 +20,7 @@ import com.management_asset.api.service.implement.AssetService;
 @RestController
 @RequestMapping("api/asset")
 public class AssetController {
+
     private AssetService assetService;
 
     @Autowired

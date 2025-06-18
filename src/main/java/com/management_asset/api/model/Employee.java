@@ -1,5 +1,6 @@
 package com.management_asset.api.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,10 +23,11 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+    @Column(unique = true)
     private String email;
 
     @ManyToOne
     @JoinColumn(name = "manager_id", referencedColumnName = "id")
-    private Employee employee;
+    private Employee manager;
 
 }
