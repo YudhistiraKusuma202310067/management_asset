@@ -1,6 +1,7 @@
 package com.management_asset.api.model;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,7 +36,8 @@ public class AssetCondition {
     @JoinColumn(name = "checker_id", referencedColumnName = "id")
     private Employee employee;
 
-    private Date checking_date;
+    private LocalDateTime checking_date;
+    private Integer rate;
     private String proof_of_damage;
     private String notes;
 
