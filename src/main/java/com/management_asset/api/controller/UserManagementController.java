@@ -51,17 +51,18 @@ public class UserManagementController {
         roles.add(userData.getRole().getName());
         LoginResponDTO loginResponDTO = new LoginResponDTO();
 
-        loginResponDTO.setId(userData.getId());
+        // loginResponDTO.setId(userData.getId());
         loginResponDTO.setRoles(roles);
         loginResponDTO.setName(userData.getUsername());
         loginResponDTO.setEmail(userData.getEmployee().getEmail());
+        loginResponDTO.setRandomCode(userData.getRandomCode());
 
         login.setData(loginResponDTO);
 
         try {
             org.springframework.security.core.userdetails.User user = new org.springframework.security.core.userdetails.User(
                     userData.getId().toString(), // id employe nya diambil //dapat dari
-                    userData.getPassword().toString(), // harus terapin encode dulu
+                    "", // harus terapin encode dulu
                     getAuthorities(roles) // masukan role name
             );
             PreAuthenticatedAuthenticationToken authenticationToken = new PreAuthenticatedAuthenticationToken(

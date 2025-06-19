@@ -1,5 +1,6 @@
 package com.management_asset.api.service.implement;
 
+import java.util.UUID;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.management_asset.api.model.Employee;
@@ -39,6 +40,7 @@ public class UserManagementService {
         // 2. Simpan User (otomatis username password = nama, role default = 3)
         User user = new User();
         user.setUsername(savedEmployee.getName());
+        user.setRandomCode(UUID.randomUUID().toString());
         user.setPassword(passwordEncoder.encode(savedEmployee.getName()));
         user.setEmployee(employeeRepository.findById(savedEmployee.getId()).orElse(null));
         Integer role = roleRepository.findRoleIdByLevel(3); // role default staff
