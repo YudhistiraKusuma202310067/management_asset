@@ -30,15 +30,11 @@ public class AppSecurityConfig {
                     try {
                         auth
                                 .antMatchers("/api/user-management","/api/loaning/approver-1").hasAuthority("manager")
-                                .antMatchers("/api/loaning/approver-2","/api/loaning/return" ).hasAuthority("procurement")
-                                .antMatchers("/api/loaning/approver").hasAnyAuthority("procurement","manager")
-                                .antMatchers("/api/loaning/approver-1/").hasAuthority("manager")
-                                .antMatchers("/api/loaning/approver-2/").hasAuthority("procurement")
+                                .antMatchers("/api/loaning/approver-2","/api/loaning/return","/api/asset/borrowed/**" ).hasAuthority("procurement")
                                 .antMatchers("/api/loaning/approver").hasAnyAuthority("manager", "procurement")
-                                .antMatchers("/api/asset/borrowed/**").hasAuthority("procurement")
                                 .antMatchers("/api/user-management/changePassword",
                                         "/api/user-management/updateUserRole", "/api/loaning/borrower/**",
-                                        "/api/loaning", "/api/asset/borrowed/**", "/api/loan-status-history/**", "/api/loaning/**")
+                                        "/api/loaning", "/api/loan-status-history/**", "/api/loaning/**")
                                 .authenticated()
                                 .anyRequest().permitAll()
                                 .and()
