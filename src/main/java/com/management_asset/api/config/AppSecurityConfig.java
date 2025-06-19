@@ -36,7 +36,7 @@ public class AppSecurityConfig {
                                 .antMatchers("/api/asset/borrowed/**").hasAuthority("procurement")
                                 .antMatchers("/api/user-management/changePassword",
                                         "/api/user-management/updateUserRole", "/api/loaning/borrower/**",
-                                        "/api/loaning", "/api/loan-status-history/**")
+                                        "/api/loaning", "/api/asset/borrowed/**", "/api/loan-status-history/**", "/api/loaning/**")
                                 .authenticated()
                                 .anyRequest().permitAll()
                                 .and()
