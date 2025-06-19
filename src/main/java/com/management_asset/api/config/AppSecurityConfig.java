@@ -29,7 +29,6 @@ public class AppSecurityConfig {
                 .authorizeHttpRequests((auth) -> {
                     try {
                         auth
-                                .antMatchers("/api/user-management/").hasAuthority("manager")
                                 .antMatchers("/api/loaning/approver-1/").hasAuthority("manager")
                                 .antMatchers("/api/loaning/approver-2/").hasAuthority("procurement")
                                 .antMatchers("/api/loaning/approver").hasAnyAuthority("manager", "procurement")
