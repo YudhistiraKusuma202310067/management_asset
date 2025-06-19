@@ -54,10 +54,10 @@ public class AssetConditionController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<Object> save(@RequestBody AssetConditionRequestDTO assetConditionDTO) {
+    @PostMapping("/{loaningId}")
+    public ResponseEntity<Object> save(@RequestBody AssetConditionRequestDTO assetConditionDTO, @PathVariable Integer loaningId) {
         try {
-            AssetConditionResponseDTO saved = assetConditionService.save(assetConditionDTO);
+            AssetConditionResponseDTO saved = assetConditionService.save(assetConditionDTO, loaningId);
             return Utils.generateResponseEntity(HttpStatus.OK, "Data has been updated", saved);
         } catch (Exception e) {
             return Utils.generateResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, "Error while saving asset conditions", null);
