@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoaningResponseDTO {
+    private Integer id;
     private LocalDateTime loanDate;
     private String assetName;
     private String loaningStatusProcess;
