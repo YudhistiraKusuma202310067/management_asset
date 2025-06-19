@@ -54,6 +54,7 @@ public class LoaningService implements ILoaningService {
     public List<LoaningResponseDTO> findAllForApprover1() {
         return loaningRepository.findByLoanStatus(1).stream()
         .map(loaning -> new LoaningResponseDTO(
+                loaning.getId(),
                 loaning.getLoanDate(),
                 loaning.getAsset() != null ? loaning.getAsset().getName() : null,
                 loaning.getLoanStatusProcess() != null ? loaning.getLoanStatusProcess().getLoaningStatus() : null
@@ -64,6 +65,17 @@ public class LoaningService implements ILoaningService {
     public List<LoaningResponseDTO> findAllForApprover2() {
         return loaningRepository.findByLoanStatus(2).stream()
         .map(loaning -> new LoaningResponseDTO(
+                loaning.getId(),
+                loaning.getLoanDate(),
+                loaning.getAsset() != null ? loaning.getAsset().getName() : null,
+                loaning.getLoanStatusProcess() != null ? loaning.getLoanStatusProcess().getLoaningStatus() : null
+            ))
+            .collect(Collectors.toList());
+    }
+    public List<LoaningResponseDTO> findAllForReturn() {
+        return loaningRepository.findByLoanStatus(3).stream()
+        .map(loaning -> new LoaningResponseDTO(
+                loaning.getId(),
                 loaning.getLoanDate(),
                 loaning.getAsset() != null ? loaning.getAsset().getName() : null,
                 loaning.getLoanStatusProcess() != null ? loaning.getLoanStatusProcess().getLoaningStatus() : null
@@ -74,6 +86,7 @@ public class LoaningService implements ILoaningService {
    public List<LoaningResponseDTO> findAllForBorrower(Integer employeeId) {
     return loaningRepository.findByEmployeeId(employeeId).stream()
             .map(loaning -> new LoaningResponseDTO(
+                loaning.getId(),
                 loaning.getLoanDate(),
                 loaning.getAsset() != null ? loaning.getAsset().getName() : null,
                 loaning.getLoanStatusProcess() != null ? loaning.getLoanStatusProcess().getLoaningStatus() : null
