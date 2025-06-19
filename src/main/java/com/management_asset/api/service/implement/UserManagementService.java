@@ -1,5 +1,6 @@
 package com.management_asset.api.service.implement;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.management_asset.api.model.Employee;
 import com.management_asset.api.model.User;
@@ -13,14 +14,17 @@ public class UserManagementService {
     private EmployeeRepository employeeRepository;
     private UserRepository userRepository;
     private RoleRepository roleRepository;
+    private PasswordEncoder passwordEncoder;
 
     // @Autowired
     public UserManagementService(UserRepository userRepository,
             EmployeeRepository employeeRepository,
-            RoleRepository roleRepository) {
+            RoleRepository roleRepository,
+            PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.employeeRepository = employeeRepository;
         this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public Employee register(EmployeeDTO employeeDTO) {
@@ -35,7 +39,7 @@ public class UserManagementService {
         // 2. Simpan User (otomatis username password = nama, role default = 3)
         User user = new User();
         user.setUsername(savedEmployee.getName());
-        user.setPassword(savedEmployee.getName());
+        user.setPassword(passwordEncoder.encode(savedEmployee.getName()));
         user.setEmployee(employeeRepository.findById(savedEmployee.getId()).orElse(null));
         Integer role = roleRepository.findRoleIdByLevel(3); // role default staff
         user.setRole(roleRepository.findById(role).orElse(null));
@@ -45,7 +49,7 @@ public class UserManagementService {
 
     public User login(String username, String password) {
         User user = userRepository.findByUsername(username);
-        if (user != null && user.getPassword().equals(password)) {
+        if (user != null && passwordEncoder.matches(password, user.getPassword())) {
             return user;
         }
         return null;
