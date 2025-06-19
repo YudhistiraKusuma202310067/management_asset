@@ -47,10 +47,14 @@ public class LoaningController {
     @GetMapping("{id}")
     public ResponseEntity<Object> getLoaningById(@PathVariable Integer id) {
         try {
-            Loaning data = loaningService.findById(id);
-            if (data == null) {
+            Loaning loaning = loaningService.findById(id);
+            if (loaning == null) {
                 return Utils.generateResponseEntity(HttpStatus.NOT_FOUND, "No loaning data found");
             }
+            LoaningResponseDTO data = new LoaningResponseDTO(
+                    loaning.getLoanDate(),
+                    loaning.getAsset() != null ? loaning.getAsset().getName() : null,
+                    loaning.getLoanStatusProcess() != null ? loaning.getLoanStatusProcess().getLoaningStatus() : null);
             return Utils.generateResponseEntity(HttpStatus.OK, "Success get data", data);
         } catch (Exception e) {
             return Utils.generateResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR,
@@ -73,7 +77,7 @@ public class LoaningController {
     public ResponseEntity<Object> getAllLoaningForApprover1() {
         try {
             List<LoaningResponseDTO> data = loaningService.findAllForApprover1();
-            if(data.isEmpty()){
+            if (data.isEmpty()) {
                 Utils.generateResponseEntity(HttpStatus.NOT_FOUND, "No loaning data found for this approver");
             }
             return Utils.generateResponseEntity(HttpStatus.OK, "Success get data", data);
