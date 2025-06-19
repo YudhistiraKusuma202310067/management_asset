@@ -1,5 +1,7 @@
 package com.management_asset.api.service.implement;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 import com.management_asset.api.model.Employee;
 import com.management_asset.api.model.User;
@@ -36,6 +38,7 @@ public class UserManagementService {
         User user = new User();
         user.setUsername(savedEmployee.getName());
         user.setPassword(savedEmployee.getName());
+        user.setRandomCode(UUID.randomUUID().toString());
         user.setEmployee(employeeRepository.findById(savedEmployee.getId()).orElse(null));
         Integer role = roleRepository.findRoleIdByLevel(3); // role default staff
         user.setRole(roleRepository.findById(role).orElse(null));

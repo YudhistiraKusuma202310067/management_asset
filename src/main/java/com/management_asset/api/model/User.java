@@ -25,6 +25,7 @@ public class User {
     @Column(unique = true)
     private String username;
     private String password;
+    private String randomCode;
 
     @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "id")

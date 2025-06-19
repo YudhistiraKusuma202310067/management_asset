@@ -14,4 +14,5 @@ public class LoginResponDTO {
     private List<String> roles;
     private String name;
     private String email;
+    private String randomCode;
 }
