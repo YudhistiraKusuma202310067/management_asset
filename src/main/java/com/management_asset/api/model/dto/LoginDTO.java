@@ -11,6 +11,4 @@ public class LoginDTO {
     private String username;
     private String password;
     private LoginResponDTO data;
-    private String name;
-    private String email;
 }
