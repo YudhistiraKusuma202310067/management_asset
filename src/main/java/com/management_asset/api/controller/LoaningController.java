@@ -52,6 +52,7 @@ public class LoaningController {
                 return Utils.generateResponseEntity(HttpStatus.NOT_FOUND, "No loaning data found");
             }
             LoaningResponseDTO data = new LoaningResponseDTO(
+                    loaning.getId(),
                     loaning.getLoanDate(),
                     loaning.getAsset() != null ? loaning.getAsset().getName() : null,
                     loaning.getLoanStatusProcess() != null ? loaning.getLoanStatusProcess().getLoaningStatus() : null);
@@ -91,6 +92,20 @@ public class LoaningController {
     public ResponseEntity<Object> getAllLoaningForApprover2() {
         try {
             List<LoaningResponseDTO> data = loaningService.findAllForApprover2();
+            if (data.isEmpty()) {
+                return Utils.generateResponseEntity(HttpStatus.NOT_FOUND, "No loaning data found for this approver");
+            }
+            return Utils.generateResponseEntity(HttpStatus.OK, "Success get data", data);
+        } catch (Exception e) {
+            return Utils.generateResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Error retrieving loaning data: " + e.getMessage());
+        }
+    }
+
+      @GetMapping("return")
+    public ResponseEntity<Object> getAllLoaningForReturner() {
+        try {
+            List<LoaningResponseDTO> data = loaningService.findAllForReturn();
             if (data.isEmpty()) {
                 return Utils.generateResponseEntity(HttpStatus.NOT_FOUND, "No loaning data found for this approver");
             }
