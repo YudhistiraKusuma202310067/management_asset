@@ -70,7 +70,7 @@ public class UserManagementController {
             PreAuthenticatedAuthenticationToken authenticationToken = new PreAuthenticatedAuthenticationToken(
                     user, "", user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-            return Utils.generateResponseEntity(HttpStatus.OK, "Login Success", login); // dapatnya dari user
+            return Utils.generateResponseEntity(HttpStatus.OK, "Login Success"); // dapatnya dari user
         } catch (Exception e) {
             return Utils.generateResponseEntity(HttpStatus.OK, "Login Failed");
         }
