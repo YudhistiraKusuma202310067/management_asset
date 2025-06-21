@@ -69,7 +69,7 @@ public class AssetController {
         try {
             List<Asset> assets = assetService.findAssetByStatus(assetStatusId);
             if (assets == null || assets.isEmpty()) {
-                return Utils.generateResponseEntity(HttpStatus.NOT_FOUND, "No Assets Found for the given status", null);
+                return Utils.generateResponseEntity(HttpStatus.OK, "No Assets Found for the given status", null);
             }
             return Utils.generateResponseEntity(HttpStatus.OK, "Data Found", assets);
         } catch (Exception e) {

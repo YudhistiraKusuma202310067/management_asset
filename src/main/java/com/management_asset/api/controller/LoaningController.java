@@ -35,7 +35,7 @@ public class LoaningController {
         try {
             List<LoaningResponseDTO> data = loaningService.findAllForBorrower(employeeId);
             if (data.isEmpty()) {
-                return Utils.generateResponseEntity(HttpStatus.NOT_FOUND, "No loaning data found for this borrower");
+                return Utils.generateResponseEntity(HttpStatus.OK, "No loaning data found for this borrower");
             }
             return Utils.generateResponseEntity(HttpStatus.OK, "Success get data", data);
         } catch (Exception e) {
@@ -49,11 +49,13 @@ public class LoaningController {
         try {
             Loaning loaning = loaningService.findById(id);
             if (loaning == null) {
-                return Utils.generateResponseEntity(HttpStatus.NOT_FOUND, "No loaning data found");
+                return Utils.generateResponseEntity(HttpStatus.OK, "No loaning data found");
             }
             LoaningResponseDTO data = new LoaningResponseDTO(
                     loaning.getId(),
                     loaning.getLoanDate(),
+                    loaning.getNote(),
+                    loaning.getEmployee().getName(),
                     loaning.getAsset() != null ? loaning.getAsset().getName() : null,
                     loaning.getLoanStatusProcess() != null ? loaning.getLoanStatusProcess().getLoaningStatus() : null);
             return Utils.generateResponseEntity(HttpStatus.OK, "Success get data", data);
@@ -79,7 +81,7 @@ public class LoaningController {
         try {
             List<LoaningResponseDTO> data = loaningService.findAllForApprover1();
             if (data.isEmpty()) {
-                Utils.generateResponseEntity(HttpStatus.NOT_FOUND, "No loaning data found for this approver");
+                Utils.generateResponseEntity(HttpStatus.OK, "No loaning data found for this approver");
             }
             return Utils.generateResponseEntity(HttpStatus.OK, "Success get data", data);
         } catch (Exception e) {
@@ -93,7 +95,7 @@ public class LoaningController {
         try {
             List<LoaningResponseDTO> data = loaningService.findAllForApprover2();
             if (data.isEmpty()) {
-                return Utils.generateResponseEntity(HttpStatus.NOT_FOUND, "No loaning data found for this approver");
+                return Utils.generateResponseEntity(HttpStatus.OK, "No loaning data found for this approver");
             }
             return Utils.generateResponseEntity(HttpStatus.OK, "Success get data", data);
         } catch (Exception e) {
@@ -107,7 +109,7 @@ public class LoaningController {
         try {
             List<LoaningResponseDTO> data = loaningService.findAllForReturn();
             if (data.isEmpty()) {
-                return Utils.generateResponseEntity(HttpStatus.NOT_FOUND, "No loaning data found for this approver");
+                return Utils.generateResponseEntity(HttpStatus.OK, "No loaning data found for this approver");
             }
             return Utils.generateResponseEntity(HttpStatus.OK, "Success get data", data);
         } catch (Exception e) {

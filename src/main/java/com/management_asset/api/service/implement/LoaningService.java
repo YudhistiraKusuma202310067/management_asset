@@ -7,12 +7,14 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.management_asset.api.model.Asset;
 import com.management_asset.api.model.LoanStatusHistory;
 import com.management_asset.api.model.Loaning;
 import com.management_asset.api.model.dto.ApproveRequestDTO;
 import com.management_asset.api.model.dto.LoaningRequestDTO;
 import com.management_asset.api.model.dto.LoaningResponseDTO;
 import com.management_asset.api.repository.AssetRepository;
+import com.management_asset.api.repository.AssetStatusRepository;
 import com.management_asset.api.repository.EmployeeRepository;
 import com.management_asset.api.repository.LoanStatusHistoryRepository;
 import com.management_asset.api.repository.LoanStatusProcessRepository;
@@ -26,6 +28,7 @@ public class LoaningService implements ILoaningService {
     private EmployeeRepository employeeRepository;
     private LoanStatusHistoryRepository loanStatusHistoryRepository;
     private AssetRepository assetRepository;
+    private AssetStatusRepository assetStatusRepository;
 
     @Autowired
     public LoaningService(
@@ -33,12 +36,14 @@ public class LoaningService implements ILoaningService {
             EmployeeRepository employeeRepository,
             LoanStatusHistoryRepository loanStatusHistoryRepository,
             LoanStatusProcessRepository loanStatusProcessRepository,
-            AssetRepository assetRepository) {
+            AssetRepository assetRepository,
+            AssetStatusRepository assetStatusRepository) {
         this.loaningRepository = loaningRepository;
         this.employeeRepository = employeeRepository;
         this.loanStatusProcessRepository = loanStatusProcessRepository;
         this.loanStatusHistoryRepository = loanStatusHistoryRepository;
         this.assetRepository = assetRepository;
+        this.assetStatusRepository = assetStatusRepository;
     }
 
     @Override
@@ -53,46 +58,55 @@ public class LoaningService implements ILoaningService {
 
     public List<LoaningResponseDTO> findAllForApprover1() {
         return loaningRepository.findByLoanStatus(1).stream()
-        .map(loaning -> new LoaningResponseDTO(
-                loaning.getId(),
-                loaning.getLoanDate(),
-                loaning.getAsset() != null ? loaning.getAsset().getName() : null,
-                loaning.getLoanStatusProcess() != null ? loaning.getLoanStatusProcess().getLoaningStatus() : null
-            ))
-            .collect(Collectors.toList());
+                .map(loaning -> new LoaningResponseDTO(
+                        loaning.getId(),
+                        loaning.getLoanDate(),
+                        loaning.getAsset() != null ? loaning.getAsset().getName() : null,
+                        loaning.getLoanStatusProcess() != null ? loaning.getLoanStatusProcess().getLoaningStatus()
+                                : null,
+                        loaning.getEmployee() != null ? loaning.getEmployee().getName() : null,
+                        loaning.getNote() != null ? loaning.getNote() : null))
+                .collect(Collectors.toList());
     }
 
     public List<LoaningResponseDTO> findAllForApprover2() {
-        return loaningRepository.findByLoanStatus(2).stream()
-        .map(loaning -> new LoaningResponseDTO(
-                loaning.getId(),
-                loaning.getLoanDate(),
-                loaning.getAsset() != null ? loaning.getAsset().getName() : null,
-                loaning.getLoanStatusProcess() != null ? loaning.getLoanStatusProcess().getLoaningStatus() : null
-            ))
-            .collect(Collectors.toList());
-    }
-    public List<LoaningResponseDTO> findAllForReturn() {
-        return loaningRepository.findByLoanStatus(3).stream()
-        .map(loaning -> new LoaningResponseDTO(
-                loaning.getId(),
-                loaning.getLoanDate(),
-                loaning.getAsset() != null ? loaning.getAsset().getName() : null,
-                loaning.getLoanStatusProcess() != null ? loaning.getLoanStatusProcess().getLoaningStatus() : null
-            ))
-            .collect(Collectors.toList());
+        return loaningRepository.findForProcurement().stream()
+                .map(loaning -> new LoaningResponseDTO(
+                        loaning.getId(),
+                        loaning.getLoanDate(),
+                        loaning.getAsset() != null ? loaning.getAsset().getName() : null,
+                        loaning.getLoanStatusProcess() != null ? loaning.getLoanStatusProcess().getLoaningStatus()
+                                : null,
+                        loaning.getEmployee() != null ? loaning.getEmployee().getName() : null,
+                        loaning.getNote() != null ? loaning.getNote() : null))
+                .collect(Collectors.toList());
     }
 
-   public List<LoaningResponseDTO> findAllForBorrower(Integer employeeId) {
-    return loaningRepository.findByEmployeeId(employeeId).stream()
-            .map(loaning -> new LoaningResponseDTO(
-                loaning.getId(),
-                loaning.getLoanDate(),
-                loaning.getAsset() != null ? loaning.getAsset().getName() : null,
-                loaning.getLoanStatusProcess() != null ? loaning.getLoanStatusProcess().getLoaningStatus() : null
-            ))
-            .collect(Collectors.toList());
-}
+    public List<LoaningResponseDTO> findAllForReturn() {
+        return loaningRepository.findByLoanStatus(3).stream()
+                .map(loaning -> new LoaningResponseDTO(
+                        loaning.getId(),
+                        loaning.getLoanDate(),
+                        loaning.getAsset() != null ? loaning.getAsset().getName() : null,
+                        loaning.getLoanStatusProcess() != null ? loaning.getLoanStatusProcess().getLoaningStatus()
+                                : null,
+                        loaning.getEmployee() != null ? loaning.getEmployee().getName() : null,
+                        loaning.getNote() != null ? loaning.getNote() : null))
+                .collect(Collectors.toList());
+    }
+
+    public List<LoaningResponseDTO> findAllForBorrower(Integer employeeId) {
+        return loaningRepository.findByEmployeeId(employeeId).stream()
+                .map(loaning -> new LoaningResponseDTO(
+                        loaning.getId(),
+                        loaning.getLoanDate(),
+                        loaning.getAsset() != null ? loaning.getAsset().getName() : null,
+                        loaning.getLoanStatusProcess() != null ? loaning.getLoanStatusProcess().getLoaningStatus()
+                                : null,
+                        loaning.getEmployee() != null ? loaning.getEmployee().getName() : null,
+                        loaning.getNote() != null ? loaning.getNote() : null))
+                .collect(Collectors.toList());
+    }
 
     public Boolean save(LoaningRequestDTO loaningRequestDTO) {
 
@@ -112,12 +126,22 @@ public class LoaningService implements ILoaningService {
         if (loaningRequestDTO.getAsset() != null) {
             loaning.setAsset(assetRepository.findById(loaningRequestDTO.getAsset()).orElse(null));
         }
-        if (loaningRequestDTO.getLoanStatusProcess() != null) {
+        if (loaningRequestDTO.getLoanStatusProcess() == null) {
             loaning.setLoanStatusProcess(
-                    loanStatusProcessRepository.findById(loaningRequestDTO.getLoanStatusProcess()).orElse(null));
+                    loanStatusProcessRepository.findById(1).orElse(null)); // Default status is 1 (Pending)
         }
 
-        loaning = loaningRepository.save(loaning);
+        loaningRepository.save(loaning);
+
+        if (loaningRequestDTO.getAsset() != null) {
+            Asset asset = assetRepository.findById(loaningRequestDTO.getAsset()).orElse(null);
+            if (asset != null) {
+                if (assetStatusRepository.findById(2).isPresent()) {
+                    asset.setAssetStatus(assetStatusRepository.findById(2).get());
+                }
+                assetRepository.save(asset);
+            }
+        }
 
         LoanStatusHistory loanStatusHistory = new LoanStatusHistory();
         loanStatusHistory.setLoaning(loaning);
@@ -139,28 +163,52 @@ public class LoaningService implements ILoaningService {
     }
 
     public Boolean approveLoaning(ApproveRequestDTO approveRequestDTO) {
-            LoanStatusHistory loanStatusHistory = new LoanStatusHistory();
-            approveRequestDTO.getId();
-            Loaning loaning = loaningRepository.findById(approveRequestDTO.getId()).orElse(null);
-            if (loaning == null) {
-               return false;
-            }
-            loaning.setLoanStatusProcess(loanStatusProcessRepository.findById(approveRequestDTO.getLoanStatusProcess()).orElse(null));
-            loanStatusHistory.setLoaning(loaning);
-            loanStatusHistory.setCreatedDate(LocalDateTime.now());
-            if (loaning.getLoanStatusProcess() != null) {
-                loanStatusHistory.setLoanStatusProcess(loaning.getLoanStatusProcess());
-                Integer statusId = loaning.getLoanStatusProcess().getId();
+        Loaning loaning = loaningRepository.findById(approveRequestDTO.getId()).orElse(null);
+        if (loaning == null)
+            return false;
 
-                if (statusId == 2) {
-                    loanStatusHistory
-                            .setApprover(employeeRepository.findManagerByEmployeeId(approveRequestDTO.getApprover()));
-                } else if (statusId == 3) {
-                    loanStatusHistory
-                            .setApprover(employeeRepository.findById(approveRequestDTO.getApprover()).orElse(null));
+        Integer previousStatusId = loaning.getLoanStatusProcess() != null ? loaning.getLoanStatusProcess().getId()
+                : null;
+
+        loaning.setLoanStatusProcess(
+                loanStatusProcessRepository.findById(approveRequestDTO.getLoanStatusProcess()).orElse(null));
+        if (loaning.getLoanStatusProcess() == null)
+            return false;
+
+        LoanStatusHistory loanStatusHistory = new LoanStatusHistory();
+        loanStatusHistory.setLoaning(loaning);
+        loanStatusHistory.setCreatedDate(LocalDateTime.now());
+        loanStatusHistory.setLoanStatusProcess(loaning.getLoanStatusProcess());
+
+        Integer statusId = loaning.getLoanStatusProcess().getId();
+
+        if (statusId == 2) {
+            loanStatusHistory.setApprover(employeeRepository.findManagerByEmployeeId(loaning.getEmployee().getId()));
+        } else if (statusId == 3) {
+            loanStatusHistory.setApprover(employeeRepository.findManagerByEmployeeId(loaning.getEmployee().getId()));
+        } else if (statusId == 5) {
+            if (loaning.getAsset() != null) {
+                Asset asset = assetRepository.findById(loaning.getAsset().getId()).orElse(null);
+                if (asset != null) {
+                    asset.setAssetStatus(assetStatusRepository.findById(1).get());
+                    assetRepository.save(asset);
                 }
             }
-            loanStatusHistoryRepository.save(loanStatusHistory);
-            return true;
+            if (previousStatusId != null && previousStatusId == 1) {
+                loanStatusHistory.setApprover(
+                        employeeRepository.findManagerByEmployeeId(loaning.getEmployee().getId()));
+            } else if (previousStatusId != null && previousStatusId == 2) {
+                loanStatusHistory.setApprover(
+                        employeeRepository.findById(approveRequestDTO.getApprover()).orElse(null));
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+        loanStatusHistoryRepository.save(loanStatusHistory);
+        return true;
     }
+
 }
