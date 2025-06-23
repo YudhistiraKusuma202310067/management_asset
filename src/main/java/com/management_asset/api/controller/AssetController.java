@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,7 +25,7 @@ public class AssetController {
     private AssetService assetService;
 
     @Autowired
-    public AssetController(AssetService assetService){
+    public AssetController(AssetService assetService) {
         this.assetService = assetService;
     }
 
@@ -33,7 +34,7 @@ public class AssetController {
         try {
             List<Asset> assets = assetService.findAll();
             if (assets == null || assets.isEmpty()) {
-                return Utils.generateResponseEntity(HttpStatus.NOT_FOUND, "No Assets Found", null);
+                return Utils.generateResponseEntity(HttpStatus.OK, "No Assets Found", null);
             }
             return Utils.generateResponseEntity(HttpStatus.OK, "Data Found", assets);
         } catch (Exception e) {
@@ -73,7 +74,8 @@ public class AssetController {
             }
             return Utils.generateResponseEntity(HttpStatus.OK, "Data Found", assets);
         } catch (Exception e) {
-            return Utils.generateResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, "Error while fetching assets by status", null);
+            return Utils.generateResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Error while fetching assets by status", null);
         }
     }
 
@@ -86,7 +88,8 @@ public class AssetController {
             }
             return Utils.generateResponseEntity(HttpStatus.OK, "Data Found", assets);
         } catch (Exception e) {
-            return Utils.generateResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, "Error while fetching borrowed assets", null);
+            return Utils.generateResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Error while fetching borrowed assets", null);
         }
     }
 }

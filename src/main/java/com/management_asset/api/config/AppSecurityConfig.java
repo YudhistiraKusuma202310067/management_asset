@@ -25,6 +25,7 @@ public class AppSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .cors().and()
                 .csrf().disable()
                 .authorizeHttpRequests((auth) -> {
                     try {
@@ -35,7 +36,8 @@ public class AppSecurityConfig {
                                 .antMatchers("/api/loaning/approver").hasAnyAuthority("manager", "procurement")
                                 .antMatchers(
                                         "/api/user-management/updateUserRole", "/api/loaning/borrower/**",
-                                        "/api/loaning", "/api/loan-status-history/**", "/api/loaning/**")
+                                        "/api/loaning", "/api/loan-status-history/**", "/api/loaning/**",
+                                        "/api/asset/**")
                                 .authenticated()
                                 .anyRequest().permitAll()
                                 .and()
@@ -62,6 +64,7 @@ public class AppSecurityConfig {
         // punya akses api siapa aja white list"
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
+        config.setAllowCredentials(true);
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
