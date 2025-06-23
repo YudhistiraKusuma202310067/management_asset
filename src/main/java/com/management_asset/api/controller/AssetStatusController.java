@@ -31,7 +31,7 @@ public class AssetStatusController {
         try {
             List<AssetStatus> statusList = assetStatusService.findAll();
             if (statusList == null || statusList.isEmpty()) {
-                return Utils.generateResponseEntity(HttpStatus.NOT_FOUND, "No Asset Status Found", null);
+                return Utils.generateResponseEntity(HttpStatus.OK, "No Asset Status Found", null);
             }
             return Utils.generateResponseEntity(HttpStatus.OK, "Data Found", statusList);
         } catch (Exception e) {
@@ -44,7 +44,7 @@ public class AssetStatusController {
         try {
             AssetStatus status = assetStatusService.findById(id);
             if (status == null) {
-                return Utils.generateResponseEntity(HttpStatus.NOT_FOUND, "Asset Status Not Found", null);
+                return Utils.generateResponseEntity(HttpStatus.OK, "Asset Status Not Found", null);
             }
             return Utils.generateResponseEntity(HttpStatus.OK, "Data Found", status);
         } catch (Exception e) {

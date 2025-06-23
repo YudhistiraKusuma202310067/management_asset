@@ -47,7 +47,7 @@ public class AssetController {
         try {
             Asset asset = assetService.findById(id);
             if (asset == null) {
-                return Utils.generateResponseEntity(HttpStatus.NOT_FOUND, "Asset Not Found", null);
+                return Utils.generateResponseEntity(HttpStatus.OK, "Asset Not Found", null);
             }
             return Utils.generateResponseEntity(HttpStatus.OK, "Data Found", asset);
         } catch (Exception e) {
@@ -84,7 +84,7 @@ public class AssetController {
         try {
             List<Asset> assets = assetService.findBorrowedAssetByEmployeeId(employeeId);
             if (assets == null || assets.isEmpty()) {
-                return Utils.generateResponseEntity(HttpStatus.NOT_FOUND, "No Borrowed Assets Found", null);
+                return Utils.generateResponseEntity(HttpStatus.OK, "No Borrowed Assets Found", null);
             }
             return Utils.generateResponseEntity(HttpStatus.OK, "Data Found", assets);
         } catch (Exception e) {
