@@ -14,5 +14,7 @@ public class LoaningResponseDTO {
     private LocalDateTime loanDate;
     private String assetName;
     private String loaningStatusProcess;
+    private String employeeName;
+    private String note;
     
 }

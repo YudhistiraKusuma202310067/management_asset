@@ -11,10 +11,13 @@ import com.management_asset.api.model.Loaning;
 
 @Repository
 public interface LoaningRepository extends JpaRepository<Loaning, Integer> {
-
+    
     @Query("SELECT l FROM Loaning l WHERE l.loanStatusProcess.id = :statusId")
     List<Loaning> findByLoanStatus(@Param("statusId") Integer statusId);
-
+    
+    @Query("SELECT l FROM Loaning l WHERE l.loanStatusProcess.id IN (2, 3)")
+    List<Loaning> findForProcurement();
+    
     @Query("SELECT l FROM Loaning l WHERE l.employee.id = :employeeId")
     List<Loaning> findByEmployeeId(@Param("employeeId") Integer employeeId);
 }
