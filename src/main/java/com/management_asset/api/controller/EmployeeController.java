@@ -21,7 +21,7 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public List<Employee> getAllAsset() {
+    public List<Employee> getAllEmployee() {
         return employeeService.findAll();
     }
 

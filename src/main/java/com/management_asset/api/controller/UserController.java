@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.management_asset.api.model.User;
+import com.management_asset.api.model.dto.ManagerDTO;
 import com.management_asset.api.service.implement.UserService;
 
 @RestController
@@ -22,13 +23,18 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getAllAsset() {
+    public List<User> getAllUser() {
         return userService.findAll();
     }
 
     @GetMapping("{id}")
     public User getUserById(@PathVariable Integer id) {
         return userService.findById(id);
+    }
+
+    @GetMapping("/getAllManager")
+    public List<ManagerDTO> getAllManager() {
+        return userService.findAllManager();
     }
 
 }

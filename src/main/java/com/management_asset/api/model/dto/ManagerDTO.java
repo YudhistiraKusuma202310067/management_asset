@@ -5,11 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class EmployeeDTO {
+@AllArgsConstructor
+public class ManagerDTO {
     private Integer id;
-    private String name;
-    private String email;
-    private Integer manager; // diubah jadi integer bukan lagi model
+    private String username;
+    private String roleName;
 }
