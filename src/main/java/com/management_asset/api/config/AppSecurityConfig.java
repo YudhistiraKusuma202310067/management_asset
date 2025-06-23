@@ -29,10 +29,11 @@ public class AppSecurityConfig {
                 .authorizeHttpRequests((auth) -> {
                     try {
                         auth
-                                .antMatchers("/api/user-management","/api/loaning/approver-1").hasAuthority("manager")
-                                .antMatchers("/api/loaning/approver-2","/api/loaning/return","/api/asset/borrowed/**" ).hasAuthority("procurement")
+                                .antMatchers("/api/user-management", "/api/loaning/approver-1").hasAuthority("manager")
+                                .antMatchers("/api/loaning/approver-2", "/api/loaning/return", "/api/asset/borrowed/**")
+                                .hasAuthority("procurement")
                                 .antMatchers("/api/loaning/approver").hasAnyAuthority("manager", "procurement")
-                                .antMatchers("/api/user-management/changePassword",
+                                .antMatchers(
                                         "/api/user-management/updateUserRole", "/api/loaning/borrower/**",
                                         "/api/loaning", "/api/loan-status-history/**", "/api/loaning/**")
                                 .authenticated()

@@ -7,9 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmployeeDTO {
+public class UpdateUserManagerDTO {
     private Integer id;
     private String name;
-    private String email;
-    private Integer manager; // diubah jadi integer bukan lagi model
+    private Integer manager;
 }
