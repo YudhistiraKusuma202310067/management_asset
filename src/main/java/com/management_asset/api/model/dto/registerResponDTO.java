@@ -7,9 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmployeeDTO {
-    private Integer id;
+public class registerResponDTO {
     private String name;
-    private String email;
-    private Integer manager; // diubah jadi integer bukan lagi model
 }
