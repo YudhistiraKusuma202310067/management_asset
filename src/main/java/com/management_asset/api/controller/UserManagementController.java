@@ -79,7 +79,7 @@ public class UserManagementController {
                 return Utils.generateResponseEntity(HttpStatus.OK, "Login Success", loginResponDTO);
 
             } catch (Exception e) {
-                return Utils.generateResponseEntity(HttpStatus.OK, "Login Failed Server");
+                return Utils.generateResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, "Login Failed Server");
             }
         } else {
             return Utils.generateResponseEntity(HttpStatus.OK, "User Not Found");
@@ -121,7 +121,7 @@ public class UserManagementController {
     public ResponseEntity<Object> updateUserManager(@RequestBody EmployeeDTO dto) {
         try {
             Boolean result = userManagementService.updateUserManager(dto.getName(), dto.getManager());
-            return Utils.generateResponseEntity(HttpStatus.FOUND, "Update Manager Succes", result);
+            return Utils.generateResponseEntity(HttpStatus.OK, "Update Manager Succes", result);
         } catch (Exception e) {
             return Utils.generateResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, "Error Update Manager", null);
         }
