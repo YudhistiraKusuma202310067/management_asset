@@ -124,4 +124,8 @@ public class AssetConditionService implements IAssetConditionService {
             LocalDateTime.now()
         );
     }
+
+    public List<AssetCondition> findAssetConditionByAssetId(Integer assetId) {
+        return assetConditionRepository.findAssetConditionByAssetId(assetId);
+    }
 }
