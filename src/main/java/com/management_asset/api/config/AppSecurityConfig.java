@@ -34,6 +34,8 @@ public class AppSecurityConfig {
                                 .antMatchers("/api/loaning/approver-2", "/api/loaning/return", "/api/asset/borrowed/**")
                                 .hasAuthority("procurement")
                                 .antMatchers("/api/loaning/approver").hasAnyAuthority("manager", "procurement")
+                                .antMatchers("/api/user-management/updateUserRole", "/api/user-management/registration")
+                                .hasAnyAuthority("manager", "procurement")
                                 .antMatchers(
                                         "/api/user-management/updateUserRole", "/api/loaning/borrower/**",
                                         "/api/loaning", "/api/loan-status-history/**", "/api/loaning/**",

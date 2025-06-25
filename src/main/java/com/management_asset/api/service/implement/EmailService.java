@@ -42,29 +42,40 @@ public class EmailService implements IEmailService {
     @Override
     public String sendApproveOrDecline(EmailDTO dto) {
 
+        // if (dto.isApproved()) {
+        // dto.setSubject("Peminjaman Aset Disetujui");
+        // dto.setBody(String.format(
+        // "Selamat %s,\n\nPermintaan peminjaman aset '%s' telah disetujui.",
+        // dto.getEmployeeName(), dto.getAssetName()));
+        // sendMail(dto);
+        // return "approve";
+        // } else {
+        // dto.setSubject("Peminjaman Aset Ditolak");
+        // dto.setBody(String.format(
+        // "Hai %s,\n\nMaaf, permintaan peminjaman aset '%s' ditolak. Silakan hubungi
+        // admin untuk info lebih lanjut.",
+        // dto.getEmployeeName(), dto.getAssetName()));
+        // sendMail(dto);
+        // return "decline";
+        // }
+        sendMail(dto);
         if (dto.isApproved()) {
-            dto.setSubject("Peminjaman Aset Disetujui");
-            dto.setBody(String.format(
-                    "Selamat %s,\n\nPermintaan peminjaman aset '%s' telah disetujui.",
-                    dto.getEmployeeName(), dto.getAssetName()));
-            sendMail(dto);
             return "approve";
         } else {
-            dto.setSubject("Peminjaman Aset Ditolak");
-            dto.setBody(String.format(
-                    "Hai %s,\n\nMaaf, permintaan peminjaman aset '%s' ditolak. Silakan hubungi admin untuk info lebih lanjut.",
-                    dto.getEmployeeName(), dto.getAssetName()));
-            sendMail(dto);
             return "decline";
         }
+
     }
 
     @Override
     public String requestEmail(EmailDTO dto) {
-        dto.setSubject("Pengajuan Peminjaman");
-        dto.setBody(String.format(
-                "Pengajuan,\n\n peminjaman aset '%s' telah dikirim.",
-                dto.getAssetName()));
+        // dto.setSubject("Pengajuan Peminjaman");
+        // dto.setBody(String.format(
+        // "Pengajuan,\n\n peminjaman aset '%s' telah dikirim.",
+        // dto.getAssetName()));
+        // sendMail(dto);
+        // return "Request Berhasil";
+
         sendMail(dto);
         return "Request Berhasil";
     }
