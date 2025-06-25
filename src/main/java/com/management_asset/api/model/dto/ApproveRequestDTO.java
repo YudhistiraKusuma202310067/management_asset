@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ApproveRequestDTO {
     private Integer id;
-    private Integer approver;
+    private String approver;
     private Integer loanStatusProcess;
     
 }

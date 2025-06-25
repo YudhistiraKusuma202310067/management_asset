@@ -49,7 +49,7 @@ public class LoaningService implements ILoaningService {
         this.loanStatusHistoryRepository = loanStatusHistoryRepository;
         this.assetRepository = assetRepository;
         this.assetStatusRepository = assetStatusRepository;
-        this.userRepository = userRepository;   
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -193,7 +193,8 @@ public class LoaningService implements ILoaningService {
         if (statusId == 2) {
             loanStatusHistory.setApprover(employeeRepository.findManagerByEmployeeId(loaning.getEmployee().getId()));
         } else if (statusId == 3) {
-            loanStatusHistory.setApprover(employeeRepository.findManagerByEmployeeId(loaning.getEmployee().getId()));
+            Employee employee = userRepository.findByRandomCode(approveRequestDTO.getApprover()).getEmployee();
+            loanStatusHistory.setApprover(employee);
         } else if (statusId == 5) {
             if (loaning.getAsset() != null) {
                 Asset asset = assetRepository.findById(loaning.getAsset().getId()).orElse(null);
@@ -206,8 +207,8 @@ public class LoaningService implements ILoaningService {
                 loanStatusHistory.setApprover(
                         employeeRepository.findManagerByEmployeeId(loaning.getEmployee().getId()));
             } else if (previousStatusId != null && previousStatusId == 2) {
-                loanStatusHistory.setApprover(
-                        employeeRepository.findById(approveRequestDTO.getApprover()).orElse(null));
+                Employee employee = userRepository.findByRandomCode(approveRequestDTO.getApprover()).getEmployee();
+                loanStatusHistory.setApprover(employee);
             } else {
                 return false;
             }
