@@ -63,4 +63,17 @@ public class AssetConditionController {
             return Utils.generateResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, "Error while saving asset conditions", null);
         }
     }
+
+    @GetMapping("/asset/{id}")
+    public ResponseEntity<Object> getAssetConditionByAssetId(@PathVariable Integer id) {
+        try {
+            List<AssetCondition> condition = assetConditionService.findAssetConditionByAssetId(id);
+            if (condition == null) {
+                return Utils.generateResponseEntity(HttpStatus.OK, "Asset Condition Not Found", null);
+            }
+            return Utils.generateResponseEntity(HttpStatus.OK, "Data Found", condition);
+        } catch (Exception e) {
+            return Utils.generateResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, "Error while fetching asset condition", null);
+        }
+    }
 }

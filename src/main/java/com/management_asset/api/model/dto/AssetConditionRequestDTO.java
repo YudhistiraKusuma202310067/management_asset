@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class AssetConditionRequestDTO {
     
     // private Integer asset;
-    private Integer employee;
+    private String employee;
     private List<ComponentAssetConditionRequestDTO> components;
 }
