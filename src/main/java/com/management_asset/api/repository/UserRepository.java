@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.management_asset.api.model.Employee;
 import com.management_asset.api.model.User;
 
 @Repository
@@ -17,5 +16,8 @@ public interface UserRepository extends JpaRepository<User, Integer> { // Intege
 
     @Query("SELECT u FROM User u WHERE u.role = 1")
     List<User> getAllManager();
+
+    @Query("SELECT u FROM User u WHERE u.randomCode = :randomCode")
+    User findByRandomCode(@Param("randomCode") String randomCode);
 
 }

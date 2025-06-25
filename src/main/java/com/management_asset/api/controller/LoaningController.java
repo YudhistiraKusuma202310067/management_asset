@@ -30,10 +30,10 @@ public class LoaningController {
         this.loaningService = loaningService;
     }
 
-    @GetMapping("borrower/{employeeId}")
-    public ResponseEntity<Object> getAllLoaningForBorrower(@PathVariable Integer employeeId) {
+    @GetMapping("borrower/{employeeRandomCode}")
+    public ResponseEntity<Object> getAllLoaningForBorrower(@PathVariable String employeeRandomCode) {
         try {
-            List<LoaningResponseDTO> data = loaningService.findAllForBorrower(employeeId);
+            List<LoaningResponseDTO> data = loaningService.findAllForBorrower(employeeRandomCode);
             if (data.isEmpty()) {
                 return Utils.generateResponseEntity(HttpStatus.OK, "No loaning data found for this borrower");
             }
