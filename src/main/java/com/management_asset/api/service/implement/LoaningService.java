@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.management_asset.api.model.Asset;
+import com.management_asset.api.model.Employee;
 import com.management_asset.api.model.LoanStatusHistory;
 import com.management_asset.api.model.Loaning;
+import com.management_asset.api.model.User;
 import com.management_asset.api.model.dto.ApproveRequestDTO;
 import com.management_asset.api.model.dto.LoaningRequestDTO;
 import com.management_asset.api.model.dto.LoaningResponseDTO;
@@ -19,6 +21,7 @@ import com.management_asset.api.repository.EmployeeRepository;
 import com.management_asset.api.repository.LoanStatusHistoryRepository;
 import com.management_asset.api.repository.LoanStatusProcessRepository;
 import com.management_asset.api.repository.LoaningRepository;
+import com.management_asset.api.repository.UserRepository;
 import com.management_asset.api.service.ILoaningService;
 
 @Service
@@ -29,6 +32,7 @@ public class LoaningService implements ILoaningService {
     private LoanStatusHistoryRepository loanStatusHistoryRepository;
     private AssetRepository assetRepository;
     private AssetStatusRepository assetStatusRepository;
+    private UserRepository userRepository;
 
     @Autowired
     public LoaningService(
@@ -37,13 +41,15 @@ public class LoaningService implements ILoaningService {
             LoanStatusHistoryRepository loanStatusHistoryRepository,
             LoanStatusProcessRepository loanStatusProcessRepository,
             AssetRepository assetRepository,
-            AssetStatusRepository assetStatusRepository) {
+            AssetStatusRepository assetStatusRepository,
+            UserRepository userRepository) {
         this.loaningRepository = loaningRepository;
         this.employeeRepository = employeeRepository;
         this.loanStatusProcessRepository = loanStatusProcessRepository;
         this.loanStatusHistoryRepository = loanStatusHistoryRepository;
         this.assetRepository = assetRepository;
         this.assetStatusRepository = assetStatusRepository;
+        this.userRepository = userRepository;   
     }
 
     @Override
@@ -57,7 +63,7 @@ public class LoaningService implements ILoaningService {
     }
 
     public List<LoaningResponseDTO> findAllForApprover1() {
-        return loaningRepository.findByLoanStatus(1).stream()
+        return loaningRepository.findForManager().stream()
                 .map(loaning -> new LoaningResponseDTO(
                         loaning.getId(),
                         loaning.getLoanDate(),
@@ -95,8 +101,9 @@ public class LoaningService implements ILoaningService {
                 .collect(Collectors.toList());
     }
 
-    public List<LoaningResponseDTO> findAllForBorrower(Integer employeeId) {
-        return loaningRepository.findByEmployeeId(employeeId).stream()
+    public List<LoaningResponseDTO> findAllForBorrower(String employeeRandomCode) {
+        User user = userRepository.findByRandomCode(employeeRandomCode);
+        return loaningRepository.findByEmployeeId(user.getEmployee().getId()).stream()
                 .map(loaning -> new LoaningResponseDTO(
                         loaning.getId(),
                         loaning.getLoanDate(),
@@ -121,7 +128,8 @@ public class LoaningService implements ILoaningService {
             loaning.setNote(loaningRequestDTO.getNote());
         }
         if (loaningRequestDTO.getEmployee() != null) {
-            loaning.setEmployee(employeeRepository.findById(loaningRequestDTO.getEmployee()).orElse(null));
+            User user = userRepository.findByRandomCode(loaningRequestDTO.getEmployee());
+            loaning.setEmployee(employeeRepository.findById(user.getEmployee().getId()).orElse(null));
         }
         if (loaningRequestDTO.getAsset() != null) {
             loaning.setAsset(assetRepository.findById(loaningRequestDTO.getAsset()).orElse(null));
