@@ -14,7 +14,7 @@ public class LoaningRequestDTO {
     private Integer id;
     private LocalDateTime loanDate;
     private String note;
-    private Integer employee;
+    private String employee;
     private Integer asset;
     private Integer loanStatusProcess;
 }

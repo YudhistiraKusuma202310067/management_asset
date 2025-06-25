@@ -31,7 +31,7 @@ public class PartsController {
         try {
             List<Parts> partsList = partsService.findAll();
             if (partsList == null || partsList.isEmpty()) {
-                return Utils.generateResponseEntity(HttpStatus.NOT_FOUND, "No Parts Found", null);
+                return Utils.generateResponseEntity(HttpStatus.OK, "No Parts Found", null);
             }
             return Utils.generateResponseEntity(HttpStatus.OK, "Data Found", partsList);
         } catch (Exception e) {
@@ -44,7 +44,7 @@ public class PartsController {
         try {
             Parts part = partsService.findById(id);
             if (part == null) {
-                return Utils.generateResponseEntity(HttpStatus.NOT_FOUND, "Part Not Found", null);
+                return Utils.generateResponseEntity(HttpStatus.OK, "Part Not Found", null);
             }
             return Utils.generateResponseEntity(HttpStatus.OK, "Data Found", part);
         } catch (Exception e) {
