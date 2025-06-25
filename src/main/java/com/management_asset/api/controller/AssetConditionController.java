@@ -33,7 +33,7 @@ public class AssetConditionController {
         try {
             List<AssetCondition> conditions = assetConditionService.findAll();
             if (conditions == null || conditions.isEmpty()) {
-                return Utils.generateResponseEntity(HttpStatus.NOT_FOUND, "No Asset Conditions Found", null);
+                return Utils.generateResponseEntity(HttpStatus.OK, "No Asset Conditions Found", null);
             }
             return Utils.generateResponseEntity(HttpStatus.OK, "Data Found", conditions);
         } catch (Exception e) {
@@ -46,7 +46,7 @@ public class AssetConditionController {
         try {
             AssetCondition condition = assetConditionService.findById(id);
             if (condition == null) {
-                return Utils.generateResponseEntity(HttpStatus.NOT_FOUND, "Asset Condition Not Found", null);
+                return Utils.generateResponseEntity(HttpStatus.OK, "Asset Condition Not Found", null);
             }
             return Utils.generateResponseEntity(HttpStatus.OK, "Data Found", condition);
         } catch (Exception e) {

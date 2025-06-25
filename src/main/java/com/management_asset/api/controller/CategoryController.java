@@ -31,7 +31,7 @@ public class CategoryController {
         try {
             List<Category> categories = categoryService.findAll();
             if (categories == null || categories.isEmpty()) {
-                return Utils.generateResponseEntity(HttpStatus.NOT_FOUND, "No Category Found", null);
+                return Utils.generateResponseEntity(HttpStatus.OK, "No Category Found", null);
             }
             return Utils.generateResponseEntity(HttpStatus.OK, "Data Found", categories);
         } catch (Exception e) {
@@ -44,7 +44,7 @@ public class CategoryController {
         try {
             Category category = categoryService.findById(id);
             if (category == null) {
-                return Utils.generateResponseEntity(HttpStatus.NOT_FOUND, "Category Not Found", null);
+                return Utils.generateResponseEntity(HttpStatus.OK, "Category Not Found", null);
             }
             return Utils.generateResponseEntity(HttpStatus.OK, "Data Found", category);
         } catch (Exception e) {
